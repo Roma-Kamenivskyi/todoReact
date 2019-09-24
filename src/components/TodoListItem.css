@@ -7,3 +7,18 @@
   width: 40px;
   height: 40px;
 }
+.todo-list-item-label {
+  cursor: pointer;
+}
+.todo-list-item-label.done {
+  text-decoration: line-through;
+}
+.btn-outline-info {
+  background-color: #fff;
+  border-color: #1b9a65;
+  color: #1b9a65;
+}
+.btn-outline-info:hover {
+  background-color: #1b9a65;
+  color: #fff;
+}

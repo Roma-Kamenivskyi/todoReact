@@ -1,3 +1,8 @@
 .container {
   max-width: 550px;
+  width: 100%;
+}
+.form-control:focus {
+  border-color: #9a9836;
+  box-shadow: 0 0 0 0.2rem rgba(154, 152, 54, 0.25);
 }

@@ -1,12 +1,14 @@
-import React, { Fragment } from "react";
+import React from "react";
+import ItemStatusFilter from "./ItemStatusFilter";
 import "./Filter.css";
 
-const FIlter = () => {
+const Filter = () => {
   return (
-    <Fragment>
+    <div className="row">
       <input type="text" placeholder="Search todos" className="form-control" />
-    </Fragment>
+      <ItemStatusFilter />
+    </div>
   );
 };
 
-export default FIlter;
+export default Filter;

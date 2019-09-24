@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import TodoList from "./components/TodoList";
 import AppHeader from "./components/AppHeader";
 import Form from "./components/Form";
-import ItemStatusFilter from "./components/ItemStatusFilter";
 import Filter from "./components/FIlter";
 import "./App.css";
 
@@ -34,10 +33,7 @@ class App extends Component {
       <div className="App">
         <div className="container">
           <AppHeader />
-          <div className="row">
-            <Filter />
-            <ItemStatusFilter />
-          </div>
+          <Filter />
           <TodoList todos={this.state.todos} />
           <Form onSubmit={this.handleSubmit} onChange={this.handleChange} />
         </div>

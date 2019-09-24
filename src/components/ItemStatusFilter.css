@@ -1,0 +1,20 @@
+.btn-group .btn-info {
+  background-color: #1b9a65;
+}
+.btn-group .btn-info:hover {
+  background-color: #1b9a65;
+}
+.btn-group .btn-info:focus {
+  background-color: #1b9a65;
+  box-shadow: 0 0 0 0.2rem rgba(24, 223, 113, 0.5);
+}
+.btn-group .btn-info:active {
+  background-color: #1b9a65;
+}
+.btn-info:not(:disabled):not(.disabled).active,
+.btn-info:not(:disabled):not(.disabled):active,
+.show > .btn-info.dropdown-toggle {
+  background-color: #079653;
+  border-color: #079653;
+  box-shadow: 0 0 0 0.2rem rgba(24, 223, 113, 0.5);
+}

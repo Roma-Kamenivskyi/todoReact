@@ -1,0 +1,8 @@
+.header {
+  display: flex;
+  align-items: center;
+}
+.tasks-info {
+  margin-left: 20px;
+  font-size: 18px;
+}
