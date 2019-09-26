@@ -1,5 +1,5 @@
 import React from "react";
-import ItemStatusFilter from "./ItemStatusFilter";
+import ItemStatusFilter from "../ItemStatusFilter";
 import "./Filter.css";
 
 const Filter = () => {
