@@ -3,40 +3,57 @@ import "./TodoListItem.css";
 
 class TodoListItem extends Component {
   state = {
-    done: false
+    done: false,
+    important: false
   };
 
-  handleLabelClick = () => {
-    this.setState({
-      done: !this.state.done
+  onLabelClick = () => {
+    this.setState(({ done }) => {
+      return {
+        done: !done
+      };
+    });
+  };
+  onMarkImportant = () => {
+    this.setState(({ important }) => {
+      return {
+        important: !important
+      };
     });
   };
 
   render() {
-    const { value, important } = this.props;
-    const { done } = this.state;
+    const { value, onDeleted } = this.props;
+    const { done, important } = this.state;
 
-    const itemStyle = {
-      color: important ? "#1B9A65" : "black",
-      fontWeight: important ? "bold" : "normal"
-    };
     let classNames = "todo-list-item-label";
 
     if (done) {
       classNames += " done";
     }
+    if (important) {
+      classNames += " important";
+    }
 
     return (
       <Fragment>
-        <li className="list-group-item todo-list-item" style={itemStyle}>
-          <span className={classNames} onClick={this.handleLabelClick}>
+        <li className="list-group-item todo-list-item">
+          <span className={classNames} onClick={this.onLabelClick}>
             {value}
           </span>
           <div>
-            <button type="button" className="btn btn-outline-danger">
+            <button
+              type="button"
+              className="btn btn-outline-danger"
+              onClick={onDeleted}
+            >
               <i className="fa fa-trash" aria-hidden="true"></i>
             </button>
-            <button type="button" className="btn btn-outline-info ml-2">
+            <button
+              type="button"
+              className="btn btn-outline-info ml-2"
+              onClick={this.onMarkImportant}
+            >
               <i className="fa fa-exclamation" aria-hidden="true"></i>
             </button>
           </div>

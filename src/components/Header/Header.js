@@ -1,7 +1,7 @@
 import React from "react";
-import "./AppHeader.css";
+import "./Header.css";
 
-const AppHeader = () => {
+const Header = () => {
   return (
     <header className="header">
       <h1 className="App-header mb-4">My todo app</h1>
@@ -10,4 +10,4 @@ const AppHeader = () => {
   );
 };
 
-export default AppHeader;
+export default Header;
