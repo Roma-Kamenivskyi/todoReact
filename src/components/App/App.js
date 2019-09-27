@@ -54,31 +54,35 @@ class App extends Component {
     });
   };
 
+  toggleProperty(arr, id, propName) {
+    const index = arr.findIndex(el => el.id === id);
+    const oldItem = arr[index];
+    const newItem = { ...oldItem, [propName]: !oldItem[propName] }; // Creating new item and change state done
+    return [...arr.slice(0, index), newItem, ...arr.slice(index + 1)];
+  }
+
   onToggleDone = id => {
     this.setState(({ todos }) => {
-      const index = todos.findIndex(el => el.id === id);
-
-      const oldItem = todos[index];
-      const newItem = { ...oldItem, done: !oldItem.done }; // Creating new item and change state done
-      const newArray = [
-        ...todos.slice(0, index),
-        newItem,
-        ...todos.slice(index + 1)
-      ];
-
-      return { todos: newArray };
+      return {
+        todos: this.toggleProperty(todos, id, "done")
+      };
     });
   };
 
   onToggleImportant = id => {
-    console.log("Toggle important: ", id);
+    this.setState(({ todos }) => {
+      return {
+        todos: this.toggleProperty(todos, id, "important")
+      };
+    });
   };
 
   render() {
-    const doneCount = this.state.todos.filter(el => el.done).length;
-    const todoCount = this.state.todos.length - doneCount;
-
     const { todos } = this.state;
+
+    const doneCount = todos.filter(el => el.done).length;
+    const todoCount = todos.length - doneCount;
+
     return (
       <div className="App">
         <div className="container">
