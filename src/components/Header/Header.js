@@ -1,11 +1,13 @@
 import React from "react";
 import "./Header.css";
 
-const Header = () => {
+const Header = ({ todo, done }) => {
   return (
     <header className="header">
       <h1 className="App-header mb-4">My todo app</h1>
-      <span className="tasks-info text-muted">1 more todo, 3 Done</span>
+      <span className="tasks-info text-muted">
+        {todo} more todo, {done} Done
+      </span>
     </header>
   );
 };

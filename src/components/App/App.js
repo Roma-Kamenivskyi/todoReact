@@ -10,12 +10,23 @@ class App extends Component {
 
   state = {
     todos: [
-      { value: "Eat", important: false, id: 1 },
-      { value: "Go home", important: false, id: 2 },
-      { value: "Clear teeth", important: false, id: 3 }
+      this.createTodoItem("Eat chicken"),
+      this.createTodoItem("Go home"),
+      this.createTodoItem("Clear teeth")
     ],
-    text: ""
+    text: "",
+    important: false,
+    done: false
   };
+
+  createTodoItem(value) {
+    return {
+      value,
+      important: false,
+      done: false,
+      id: this.randomId++
+    };
+  }
 
   addTodoItem = event => {
     event.preventDefault();
@@ -23,11 +34,7 @@ class App extends Component {
       return;
     }
     this.setState(({ todos, text }) => {
-      const newItem = {
-        value: text,
-        important: false,
-        id: this.randomId++
-      };
+      const newItem = this.createTodoItem(text);
       const newArray = [...todos, newItem];
       return { todos: newArray, text: "" };
     });
@@ -47,14 +54,42 @@ class App extends Component {
     });
   };
 
+  onToggleDone = id => {
+    this.setState(({ todos }) => {
+      const index = todos.findIndex(el => el.id === id);
+
+      const oldItem = todos[index];
+      const newItem = { ...oldItem, done: !oldItem.done }; // Creating new item and change state done
+      const newArray = [
+        ...todos.slice(0, index),
+        newItem,
+        ...todos.slice(index + 1)
+      ];
+
+      return { todos: newArray };
+    });
+  };
+
+  onToggleImportant = id => {
+    console.log("Toggle important: ", id);
+  };
+
   render() {
+    const doneCount = this.state.todos.filter(el => el.done).length;
+    const todoCount = this.state.todos.length - doneCount;
+
     const { todos } = this.state;
     return (
       <div className="App">
         <div className="container">
-          <Header />
+          <Header todo={todoCount} done={doneCount} />
           <Filter />
-          <TodoList todos={todos} onDeleted={this.deleteItem} />
+          <TodoList
+            todos={todos}
+            onDeleted={this.deleteItem}
+            onToggleImportant={this.onToggleImportant}
+            onToggleDone={this.onToggleDone}
+          />
           <FormAddTodo
             onTodoItemAdded={this.addTodoItem}
             onChange={this.handleChange}
