@@ -14,7 +14,6 @@ class App extends Component {
       this.createTodoItem("Go home"),
       this.createTodoItem("Clear teeth")
     ],
-    text: "",
     important: false,
     done: false
   };
@@ -27,24 +26,6 @@ class App extends Component {
       id: this.randomId++
     };
   }
-
-  addTodoItem = event => {
-    event.preventDefault();
-    if (!this.state.text.length) {
-      return;
-    }
-    this.setState(({ todos, text }) => {
-      const newItem = this.createTodoItem(text);
-      const newArray = [...todos, newItem];
-      return { todos: newArray, text: "" };
-    });
-  };
-
-  handleChange = event => {
-    this.setState({
-      text: event.target.value
-    });
-  };
 
   deleteItem = id => {
     this.setState(({ todos }) => {
@@ -76,10 +57,15 @@ class App extends Component {
       };
     });
   };
-
+  addTodoItem = text => {
+    const newItem = this.createTodoItem(text);
+    this.setState(({ todos }) => {
+      const newArray = [...todos, newItem];
+      return { todos: newArray };
+    });
+  };
   render() {
     const { todos } = this.state;
-
     const doneCount = todos.filter(el => el.done).length;
     const todoCount = todos.length - doneCount;
 
