@@ -1,4 +1,4 @@
-.todo-list-item {
+.list-group .todo-list-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -14,7 +14,7 @@
   text-decoration: line-through;
 }
 .todo-list-item-label.important {
-  color: #1B9A65;
+  color: #1b9a65;
   font-weight: bold;
 }
 .btn-outline-info {

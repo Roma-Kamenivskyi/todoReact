@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import "./FormAddTodo.css";
+import React, { Component } from 'react';
+import './FormAddTodo.css';
 
 class FormAddTodo extends Component {
   state = {
-    text: ""
+    text: ''
   };
 
   onChange = event => {
@@ -14,22 +14,27 @@ class FormAddTodo extends Component {
 
   onAddTodoItem = event => {
     event.preventDefault();
+    if (this.state.text.trim() === '') {
+      return;
+    }
     this.props.onTodoItemAdded(this.state.text);
+    this.setState({ text: '' });
   };
 
   render() {
     const { onTodoItemAdded, onChange } = this.props;
     return (
-      <form
-        className="input-group mt-4"
-        onSubmit={this.onAddTodoItem}
-        onChange={this.onChange}
-      >
+      <form className='input-group mt-4' onSubmit={this.onAddTodoItem}>
         <input
-          className="form-control input-add-task"
-          type="text"
-          placeholder="What needs to be done?"
+          className='form-control input-add-task'
+          type='text'
+          placeholder='What needs to be done?'
+          onChange={this.onChange}
+          value={this.state.text}
         />
+        <div className='input-group-append'>
+          <button className='btn btn-primary'>Add</button>
+        </div>
       </form>
     );
   }

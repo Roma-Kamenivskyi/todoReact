@@ -1,21 +1,23 @@
-import React, { Component } from "react";
-import TodoList from "../TodoList";
-import Header from "../Header";
-import FormAddTodo from "../FormAddTodo";
-import Filter from "../Filter";
-import "./App.css";
+import React, { Component } from 'react';
+import '../../bootstrap.min.css';
+
+import TodoList from '../TodoList';
+import Header from '../Header';
+import FormAddTodo from '../FormAddTodo';
+import Filter from '../Filter';
+
+import './App.css';
 
 class App extends Component {
-  randomId = Math.random() * 100;
-
   state = {
     todos: [
-      this.createTodoItem("Eat chicken"),
-      this.createTodoItem("Go home"),
-      this.createTodoItem("Clear teeth")
+      this.createTodoItem('Clear teeth'),
+      this.createTodoItem('Go sleep'),
+      this.createTodoItem('Go eat')
     ],
     important: false,
-    done: false
+    done: false,
+    searchValue: ''
   };
 
   createTodoItem(value) {
@@ -23,14 +25,13 @@ class App extends Component {
       value,
       important: false,
       done: false,
-      id: this.randomId++
+      id: Math.random() * 100
     };
   }
 
   deleteItem = id => {
     this.setState(({ todos }) => {
-      const index = todos.findIndex(el => el.id === id);
-      const newArray = [...todos.slice(0, index), ...todos.slice(index + 1)];
+      const newArray = todos.filter(todo => todo.id !== id);
       return { todos: newArray };
     });
   };
@@ -45,7 +46,7 @@ class App extends Component {
   onToggleDone = id => {
     this.setState(({ todos }) => {
       return {
-        todos: this.toggleProperty(todos, id, "done")
+        todos: this.toggleProperty(todos, id, 'done')
       };
     });
   };
@@ -53,29 +54,57 @@ class App extends Component {
   onToggleImportant = id => {
     this.setState(({ todos }) => {
       return {
-        todos: this.toggleProperty(todos, id, "important")
+        todos: this.toggleProperty(todos, id, 'important')
       };
     });
   };
+
   addTodoItem = text => {
     const newItem = this.createTodoItem(text);
+
     this.setState(({ todos }) => {
       const newArray = [...todos, newItem];
       return { todos: newArray };
     });
   };
+
+  onActiveFilterClick = () => {
+    const activeTodos = this.state.todos.filter(todo => !todo.done);
+    console.log(activeTodos);
+  };
+
+  onSearchTodos = searchValue => {
+    this.setState({ searchValue });
+  };
+
+  search = (array, term) => {
+    if (term.trim() === '') {
+      return array;
+    }
+
+    return array.filter(item =>
+      item.value.toLowerCase().includes(term.toLowerCase())
+    );
+  };
+
   render() {
-    const { todos } = this.state;
+    const { todos, searchValue } = this.state;
+
     const doneCount = todos.filter(el => el.done).length;
     const todoCount = todos.length - doneCount;
+    const visibleItems = this.search(todos, searchValue);
 
     return (
-      <div className="App">
-        <div className="container">
+      <div className='App'>
+        <div className='container'>
           <Header todo={todoCount} done={doneCount} />
-          <Filter />
-          <TodoList
+          <Filter
             todos={todos}
+            onActive={this.onActiveFilterClick}
+            onSearch={this.onSearchTodos}
+          />
+          <TodoList
+            todos={visibleItems}
             onDeleted={this.deleteItem}
             onToggleImportant={this.onToggleImportant}
             onToggleDone={this.onToggleDone}
