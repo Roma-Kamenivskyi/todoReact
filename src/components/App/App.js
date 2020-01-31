@@ -3,8 +3,9 @@ import '../../bootstrap.min.css';
 
 import TodoList from '../TodoList';
 import Header from '../Header';
-import FormAddTodo from '../FormAddTodo';
-import Filter from '../Filter';
+import AddTodoForm from '../AddTodoForm';
+import SearchPanel from '../SearchPanel';
+import FilterTabs from '../FilterTabs';
 
 import './App.css';
 
@@ -15,9 +16,8 @@ class App extends Component {
       this.createTodoItem('Go sleep'),
       this.createTodoItem('Go eat')
     ],
-    important: false,
-    done: false,
-    searchValue: ''
+    searchValue: '',
+    filter: 'all'
   };
 
   createTodoItem(value) {
@@ -40,6 +40,7 @@ class App extends Component {
     const index = arr.findIndex(el => el.id === id);
     const oldItem = arr[index];
     const newItem = { ...oldItem, [propName]: !oldItem[propName] }; // Creating new item and change state done
+
     return [...arr.slice(0, index), newItem, ...arr.slice(index + 1)];
   }
 
@@ -68,11 +69,6 @@ class App extends Component {
     });
   };
 
-  onActiveFilterClick = () => {
-    const activeTodos = this.state.todos.filter(todo => !todo.done);
-    console.log(activeTodos);
-  };
-
   onSearchTodos = searchValue => {
     this.setState({ searchValue });
   };
@@ -86,30 +82,41 @@ class App extends Component {
       item.value.toLowerCase().includes(term.toLowerCase())
     );
   };
+  onFilter = (array, filter) => {
+    switch (filter) {
+      case 'all':
+        return array;
+      case 'active':
+        return array.filter(item => !item.done);
+      case 'done':
+        return array.filter(item => item.done);
+      default:
+        return array;
+    }
+  };
+  onFilterChange = filter => this.setState({ filter });
 
   render() {
-    const { todos, searchValue } = this.state;
+    const { todos, searchValue, filter } = this.state;
 
     const doneCount = todos.filter(el => el.done).length;
     const todoCount = todos.length - doneCount;
-    const visibleItems = this.search(todos, searchValue);
+    const visibleItems = this.onFilter(this.search(todos, searchValue), filter);
 
     return (
       <div className='App'>
         <div className='container'>
           <Header todo={todoCount} done={doneCount} />
-          <Filter
-            todos={todos}
-            onActive={this.onActiveFilterClick}
-            onSearch={this.onSearchTodos}
-          />
+          <SearchPanel onSearch={this.onSearchTodos}>
+            <FilterTabs filter={filter} onFilterChange={this.onFilterChange} />
+          </SearchPanel>
           <TodoList
             todos={visibleItems}
             onDeleted={this.deleteItem}
             onToggleImportant={this.onToggleImportant}
             onToggleDone={this.onToggleDone}
           />
-          <FormAddTodo
+          <AddTodoForm
             onTodoItemAdded={this.addTodoItem}
             onChange={this.handleChange}
           />

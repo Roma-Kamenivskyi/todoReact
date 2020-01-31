@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import './FormAddTodo.css';
+import './AddTodoForm.css';
 
-class FormAddTodo extends Component {
+class AddTodoForm extends Component {
   state = {
     text: ''
   };
@@ -40,4 +40,4 @@ class FormAddTodo extends Component {
   }
 }
 
-export default FormAddTodo;
+export default AddTodoForm;

@@ -14,15 +14,6 @@
   text-decoration: line-through;
 }
 .todo-list-item-label.important {
-  color: #1b9a65;
+  color: #6cc3d5;
   font-weight: bold;
-}
-.btn-outline-info {
-  background-color: #fff;
-  border-color: #1b9a65;
-  color: #1b9a65;
-}
-.btn-outline-info:hover {
-  background-color: #1b9a65;
-  color: #fff;
 }
