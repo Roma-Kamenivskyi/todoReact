@@ -2,13 +2,13 @@ import React from 'react';
 import './FilterTabs.css';
 
 const FilterTabs = ({ onFilterChange, filter }) => {
-  const buttons = [
+  const tabs = [
     { value: 'all', label: 'All' },
     { value: 'active', label: 'Active' },
     { value: 'done', label: 'done' }
   ];
 
-  const tabs = buttons.map(({ value, label }) => {
+  const renderTabs = tabs.map(({ value, label }) => {
     const isActive = filter === value;
     const classes = `btn btn-${isActive ? 'primary' : 'outline-primary'}`;
 
@@ -24,7 +24,7 @@ const FilterTabs = ({ onFilterChange, filter }) => {
     );
   });
 
-  return <div className='input-group-append'>{tabs}</div>;
+  return <div className='input-group-append'>{renderTabs}</div>;
 };
 
 export default FilterTabs;

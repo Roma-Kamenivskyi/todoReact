@@ -19,6 +19,15 @@ class App extends Component {
     searchValue: '',
     filter: 'all'
   };
+  componentDidMount() {
+    this.getTodosFromLocaleStorege();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.todos !== this.state.todos) {
+      this.addToLocaleStorage();
+    }
+  }
 
   createTodoItem(value) {
     return {
@@ -40,7 +49,7 @@ class App extends Component {
     const index = arr.findIndex(el => el.id === id);
     const oldItem = arr[index];
     const newItem = { ...oldItem, [propName]: !oldItem[propName] }; // Creating new item and change state done
-
+    console.log(newItem);
     return [...arr.slice(0, index), newItem, ...arr.slice(index + 1)];
   }
 
@@ -60,6 +69,15 @@ class App extends Component {
     });
   };
 
+  // locale storage operations
+  addToLocaleStorage = () => {
+    localStorage.setItem('todos', JSON.stringify(this.state.todos));
+  };
+
+  getTodosFromLocaleStorege = () => {
+    this.setState({ todos: JSON.parse(localStorage.getItem('todos')) });
+  };
+
   addTodoItem = text => {
     const newItem = this.createTodoItem(text);
 
@@ -67,6 +85,7 @@ class App extends Component {
       const newArray = [...todos, newItem];
       return { todos: newArray };
     });
+    this.addToLocaleStorage();
   };
 
   onSearchTodos = searchValue => {
