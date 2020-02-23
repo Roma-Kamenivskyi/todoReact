@@ -1,4 +1,6 @@
 import React from 'react';
+import classnames from 'classnames';
+
 import './TodoListItem.css';
 
 const TodoListItem = ({
@@ -9,18 +11,14 @@ const TodoListItem = ({
   important,
   done
 }) => {
-  let classNames = 'todo-list-item-label';
-
-  if (done) {
-    classNames += ' done';
-  }
-  if (important) {
-    classNames += ' important';
-  }
+  const classes = classnames('todo-list-item-label', {
+    done: done,
+    important: important
+  });
 
   return (
     <li className='list-group-item todo-list-item'>
-      <span className={classNames} onClick={onToggleDone}>
+      <span className={classes} onClick={onToggleDone}>
         {value}
       </span>
       <div>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import '../../bootstrap.min.css';
 
 import TodoList from '../TodoList';
@@ -49,7 +50,7 @@ class App extends Component {
     const index = arr.findIndex(el => el.id === id);
     const oldItem = arr[index];
     const newItem = { ...oldItem, [propName]: !oldItem[propName] }; // Creating new item and change state done
-    console.log(newItem);
+
     return [...arr.slice(0, index), newItem, ...arr.slice(index + 1)];
   }
 
@@ -101,6 +102,7 @@ class App extends Component {
       item.value.toLowerCase().includes(term.toLowerCase())
     );
   };
+
   onFilter = (array, filter) => {
     switch (filter) {
       case 'all':
@@ -113,6 +115,7 @@ class App extends Component {
         return array;
     }
   };
+
   onFilterChange = filter => this.setState({ filter });
 
   render() {

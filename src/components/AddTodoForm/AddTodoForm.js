@@ -22,7 +22,6 @@ class AddTodoForm extends Component {
   };
 
   render() {
-    const { onTodoItemAdded, onChange } = this.props;
     return (
       <form className='input-group mt-4' onSubmit={this.onAddTodoItem}>
         <input

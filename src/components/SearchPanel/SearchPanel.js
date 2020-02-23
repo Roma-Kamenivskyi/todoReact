@@ -1,22 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
+
 import './SearchPanel.css';
 
-class SearchPanel extends Component {
-  render() {
-    return (
-      <div className='row'>
-        <div className='input-group'>
-          <input
-            type='text'
-            placeholder='Search todos'
-            className='form-control'
-            onChange={e => this.props.onSearch(e.target.value)}
-          />
-          {this.props.children}
-        </div>
-      </div>
-    );
-  }
-}
+const SearchPanel = ({ onSearch, children }) => (
+  <div className='row'>
+    <div className='input-group'>
+      <input
+        type='text'
+        placeholder='Search todos'
+        className='form-control'
+        onChange={e => onSearch(e.target.value)}
+      />
+      {children}
+    </div>
+  </div>
+);
 
 export default SearchPanel;

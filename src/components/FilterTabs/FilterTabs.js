@@ -1,4 +1,6 @@
 import React from 'react';
+import classnames from 'classnames';
+
 import './FilterTabs.css';
 
 const FilterTabs = ({ onFilterChange, filter }) => {
@@ -10,7 +12,11 @@ const FilterTabs = ({ onFilterChange, filter }) => {
 
   const renderTabs = tabs.map(({ value, label }) => {
     const isActive = filter === value;
-    const classes = `btn btn-${isActive ? 'primary' : 'outline-primary'}`;
+
+    const classes = classnames('btn', {
+      'btn-primary': isActive,
+      'btn-outline-primary': !isActive
+    });
 
     return (
       <button
