@@ -15,13 +15,13 @@ class App extends Component {
     todos: [
       this.createTodoItem('Clear teeth'),
       this.createTodoItem('Go sleep'),
-      this.createTodoItem('Go eat')
+      this.createTodoItem('Go eat'),
     ],
     searchValue: '',
-    filter: 'all'
+    filter: 'all',
   };
   componentDidMount() {
-    this.getTodosFromLocaleStorege();
+    this.getTodosFromLocaleStorage();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -35,37 +35,38 @@ class App extends Component {
       value,
       important: false,
       done: false,
-      id: Math.random() * 100
+      id: Math.random() * 100,
     };
   }
 
-  deleteItem = id => {
+  deleteItem = (id) => {
     this.setState(({ todos }) => {
-      const newArray = todos.filter(todo => todo.id !== id);
+      const newArray = todos.filter((todo) => todo.id !== id);
+
       return { todos: newArray };
     });
   };
 
   toggleProperty(arr, id, propName) {
-    const index = arr.findIndex(el => el.id === id);
+    const index = arr.findIndex((el) => el.id === id);
     const oldItem = arr[index];
     const newItem = { ...oldItem, [propName]: !oldItem[propName] }; // Creating new item and change state done
 
     return [...arr.slice(0, index), newItem, ...arr.slice(index + 1)];
   }
 
-  onToggleDone = id => {
+  onToggleDone = (id) => {
     this.setState(({ todos }) => {
       return {
-        todos: this.toggleProperty(todos, id, 'done')
+        todos: this.toggleProperty(todos, id, 'done'),
       };
     });
   };
 
-  onToggleImportant = id => {
+  onToggleImportant = (id) => {
     this.setState(({ todos }) => {
       return {
-        todos: this.toggleProperty(todos, id, 'important')
+        todos: this.toggleProperty(todos, id, 'important'),
       };
     });
   };
@@ -75,11 +76,15 @@ class App extends Component {
     localStorage.setItem('todos', JSON.stringify(this.state.todos));
   };
 
-  getTodosFromLocaleStorege = () => {
-    this.setState({ todos: JSON.parse(localStorage.getItem('todos')) });
+  getTodosFromLocaleStorage = () => {
+    if (JSON.parse(localStorage.getItem('todos'))) {
+      this.setState({ todos: JSON.parse(localStorage.getItem('todos')) });
+    } else {
+      localStorage.setItem('todos', JSON.stringify(this.state.todos));
+    }
   };
 
-  addTodoItem = text => {
+  addTodoItem = (text) => {
     const newItem = this.createTodoItem(text);
 
     this.setState(({ todos }) => {
@@ -89,7 +94,7 @@ class App extends Component {
     this.addToLocaleStorage();
   };
 
-  onSearchTodos = searchValue => {
+  onSearchTodos = (searchValue) => {
     this.setState({ searchValue });
   };
 
@@ -98,7 +103,7 @@ class App extends Component {
       return array;
     }
 
-    return array.filter(item =>
+    return array.filter((item) =>
       item.value.toLowerCase().includes(term.toLowerCase())
     );
   };
@@ -108,22 +113,24 @@ class App extends Component {
       case 'all':
         return array;
       case 'active':
-        return array.filter(item => !item.done);
+        return array.filter((item) => !item.done);
       case 'done':
-        return array.filter(item => item.done);
+        return array.filter((item) => item.done);
       default:
         return array;
     }
   };
 
-  onFilterChange = filter => this.setState({ filter });
+  onFilterChange = (filter) => this.setState({ filter });
 
   render() {
     const { todos, searchValue, filter } = this.state;
 
-    const doneCount = todos.filter(el => el.done).length;
+    const doneCount = todos.filter((el) => el.done).length;
     const todoCount = todos.length - doneCount;
     const visibleItems = this.onFilter(this.search(todos, searchValue), filter);
+
+    console.log(visibleItems);
 
     return (
       <div className='App'>
